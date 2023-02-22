@@ -97,14 +97,14 @@ createUsers()
 	    useradd -u "$uid" -G "$gid" -m -s "/bin/bash" -c "$hname,,$mail," "$uname" ||  echo "${warn}ADVERTENCIA: Intentando crear en modo jefe de grupo . . . ${reset}" && useradd -u "$uid" -g "$gid" -m -s "/bin/bash" -c "$hname,,$mail," "$uname"
 	    uspas=$uname:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 6 ; echo '')
 	    echo $uspas | chpasswd -m
-	    echo $line,$uspas >> new_users.csv
+	    echo $line,$uspas >> new_users.ubmi
 	    echo
 
 	else
 	    echo "${error}ERROR: Ya existe un usuario con nombre $uname"
-	    echo "${warn}ADVERTENCIA: no se creará este usuario pero se guardará en ${colorbg}fail_users.csv${reset}"
+	    echo "${warn}ADVERTENCIA: no se creará este usuario pero se guardará en ${colorbg}fail_users.ubmi${reset}"
 	    echo
-	    echo $line >> fail_users.csv
+	    echo $line >> fail_users.ubmi
 	fi
 
     done < $1
@@ -118,8 +118,8 @@ createGroups()
 
 createGroupAndUsers()
 {
-    echo "#$(date)" > new_users.csv
-    echo "#$(date)" > fail_users.csv
+    echo "#$(date)" > new_users.ubmi
+    echo "#$(date)" > fail_users.ubmi
     
     if [ $1 = true ];
     then
