@@ -6,7 +6,8 @@ then
 	echo  "example:"
 	echo  "		./check_for_lastlog.sh a_usermanager_userlist.csv"
 else
-	cat $1 | cut -d , -f 5 > tmp
+	cat $1 > /dev/null || exit 1
+ 	cat $1 | cut -d , -f 5 > tmp
 	lastlog | grep -f tmp | cut -f 1 > tmp2
 	lastlog | grep -f tmp | grep "\*\*" | cut -f 1 > tmp3
 
