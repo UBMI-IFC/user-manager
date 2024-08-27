@@ -38,6 +38,6 @@ else
 		grep $L tmp2 > /dev/null || grep $L $1 | cut -d , -f 5,4
 	done < tmp
 
-	#rm tmp tmp2 tmp3
+	rm tmp tmp2 tmp3
 
 fi
