@@ -11,7 +11,7 @@ else
 	lastlog | grep -f tmp | grep "\*\*" | cut -f 1 > tmp3
 
 	echo "USERS LOG ACTIVITY REPORT FOR $(hostname)"
-	echo "Input usersfor search"
+	echo "List of users to be found on this computer"
 	cat tmp
 	echo "Users who have never logged in:"
 	while read L
@@ -23,9 +23,8 @@ else
 	
 	while read L
 	do
-		grep $L tmp2 > /dev/null || echo $L
+		grep $L tmp2 > /dev/null || grep $L $1 | cut -d , -f 5,4
 	done < tmp
 
 	rm tmp tmp2 tmp3
-
 fi
