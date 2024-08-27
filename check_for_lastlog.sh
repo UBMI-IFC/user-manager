@@ -15,7 +15,7 @@ else
 	lastlog | grep -f tmp | grep "\*\*" | cut -f 1 > tmp3
 
 	echo "USERS LOG ACTIVITY REPORT FOR $(hostname)"
-	echo "List of users to be found on this computer"
+	echo "List of users to be found on this computer:"
 	cat tmp
 	echo "Users who have never logged in:"
 	while read L
