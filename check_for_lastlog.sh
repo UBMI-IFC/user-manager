@@ -7,28 +7,37 @@ then
 	echo  "		./check_for_lastlog.sh a_usermanager_userlist.csv"
 elif [[ $(head -n 1 $1 2> /dev/null | tr -cd , | wc -c) -ne 4 ]]
 then
-        echo "Incorrect format file"
-        exit 1
+	echo "Incorrect format file"
+	exit 1
 else
- 	cat $1 | cut -d , -f 5 > tmp 
+	cat $1 | cut -d , -f 5 > tmp
 	lastlog | grep -f tmp | cut -f 1 > tmp2
 	lastlog | grep -f tmp | grep "\*\*" | cut -f 1 > tmp3
 
 	echo "USERS LOG ACTIVITY REPORT FOR $(hostname)"
-	echo "List of users to be found on this computer:"
-	cat tmp
+	echo ""
+	echo "Active users"
+	echo "------------------------------------------------"
+	while read L
+	do
+		grep $L /etc/passwd | cut -d : -f 1,3
+	done < tmp2
+	echo ""
 	echo "Users who have never logged in:"
+	echo "------------------------------------------------"
 	while read L
 	do
 		grep $L /etc/passwd | cut -d : -f 1,3
 	done < tmp3
 	echo  ""
 	echo "Users from input file not found on this system:"
+	echo "------------------------------------------------"
 	
 	while read L
 	do
 		grep $L tmp2 > /dev/null || grep $L $1 | cut -d , -f 5,4
 	done < tmp
 
-	rm tmp tmp2 tmp3
+	#rm tmp tmp2 tmp3
+
 fi
