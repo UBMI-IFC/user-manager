@@ -5,9 +5,12 @@ then
 	echo  "Please provide a csv file in usermanager.sh format"
 	echo  "example:"
 	echo  "		./check_for_lastlog.sh a_usermanager_userlist.csv"
+elif [[ $(head -n 1 $1 2> /dev/null | tr -cd , | wc -c) -ne 4 ]]
+then
+        echo "Incorrect format file"
+        exit 1
 else
-	cat $1 > /dev/null || exit 1
- 	cat $1 | cut -d , -f 5 > tmp
+ 	cat $1 | cut -d , -f 5 > tmp 
 	lastlog | grep -f tmp | cut -f 1 > tmp2
 	lastlog | grep -f tmp | grep "\*\*" | cut -f 1 > tmp3
 
