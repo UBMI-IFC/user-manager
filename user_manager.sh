@@ -237,7 +237,7 @@ createGroupAndUsers()
 # verificación de archivo
 tablecheck()
 {
-    tstfilecomp=$(cat $inputfile | egrep  "^[a-z A-ZáéíóúñÑÁÉÍÓÚ]+,[a-z._0-9]+@[a-z._0-9]+,[0-9]{4},[0-9]{4},[a-z0-9]+$" | wc -l)
+    tstfilecomp=$(cat $inputfile | grep -E   "^[a-z A-ZáéíóúñÑÁÉÍÓÚ]+,[a-z._0-9]+@[a-z._0-9]+,[0-9]{4},[0-9]{4},[a-z0-9]+$" | wc -l)
     tstfilelen=$(cat $inputfile | wc -l)
     if [ $tstfilecomp == "0" ];
     then
@@ -255,14 +255,14 @@ tablecheck()
 	echo "Renglones con formato correcto: $tstfilecomp / $tstfilelen"
 	echo
 	echo "Renglones problemáticos:${error}"
-	cat $inputfile | egrep  -v  "^[a-z A-ZáéíóúñÑÁÉÍÓÚ]+,[a-z._0-9]+@[a-z._0-9]+,[0-9]{4},[0-9]{4},[a-z0-9]+$"
+	cat $inputfile | grep -E   -v  "^[a-z A-ZáéíóúñÑÁÉÍÓÚ]+,[a-z._0-9]+@[a-z._0-9]+,[0-9]{4},[0-9]{4},[a-z0-9]+$"
 	echo
 	echo "${warn}NO se procesaran los renglones problematicos."
 	echo "${error}Deseas continuar? (y / n)${reset}"
 	read cont
 	if [ "$cont" == "y" ] || [ "$cont" == "Y" ];
 	then
-	    cat $inputfile | egrep "^[a-z A-ZáéíóúñÑÁÉÍÓÚ]+,[a-z._0-9]+@[a-z._0-9]+,[0-9]{4},[0-9]{4},[a-z0-9]+$" > filteredinput.csv
+	    cat $inputfile | grep -E  "^[a-z A-ZáéíóúñÑÁÉÍÓÚ]+,[a-z._0-9]+@[a-z._0-9]+,[0-9]{4},[0-9]{4},[a-z0-9]+$" > filteredinput.csv
 	    inputfile=filteredinput.csv
 	else
 	    exit
